@@ -17,4 +17,4 @@ jobs:
           allow_empty_commit: true
 
       - name: Tree
-        run: tree /home/runner/work/NoteGenerator/NoteGenerator
+        run: tree /home/runner
