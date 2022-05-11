@@ -97,7 +97,8 @@
             <h1 class="title">Rule</h1>
             <p>Refresh this page, you will get 4 beats of notes. </p>
             <p>Each column represents a semiquaver, 1 beat consists of 4 columns.</p>
-            <p>You should compose a piece of music including these white-highlighted notes at the corresponding time tick.</p>
+            <p>You should compose a piece of music including these white-highlighted notes at the corresponding time
+                tick.</p>
             <p>Of course, you can refresh this page several times to get more BEATS.</p>
         </div>
     </main>
@@ -117,7 +118,12 @@
             }
 
             // Generate Notes
-            var matrix = NoteGenerator.matrix(width, range, density);
+            // var matrix = NoteGenerator.randomMatrix(width, range, density);
+            var matrix = NoteGenerator.note12Matrix(width, function (i) {
+                if (i % 4 == 0) return 2;
+                else if (i % 2 == 0) return 0.5;
+                else return 0.25;
+            }, [10, 1, 5, 4, 10, 10, 4, 10, 4, 10, 4, 10]);
             console.log(matrix);
             for (let j = 0; j < range; j++) {
                 var div = document.createElement("div");
