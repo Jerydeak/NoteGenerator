@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="scripts/main.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <title>Note Generator</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        main {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: #333;
+            text-align: center;
+        }
+
+        main>h1 {
+            height: 80px;
+            line-height: 80px;
+            color: white;
+            user-select: none;
+        }
+
+        #note-container {
+            /* background-color: aqua; */
+            width: 100vw;
+            /* height: calc(100vh - 80px); */
+        }
+
+        .row {
+            width: 100vw;
+            height: 30px;
+            /* background-color: bisque; */
+        }
+
+        .cell {
+            float: left;
+            font-size: auto;
+            line-height: 30px;
+            font-weight: bold;
+            height: 100%;
+            width: calc(100vw/16);
+            user-select: none;
+        }
+
+        .cell.selected {
+            background-color: white;
+        }
+
+        .row.title {
+            height: 50px;
+            background-color: #555;
+        }
+
+        .row.title>.cell {
+            line-height: 50px;
+            color: white;
+        }
+    </style>
+    <style>
+        #notice {
+            margin: 50px;
+            padding: 50px;
+            color: white;
+            background-color: #555;
+            text-align: left;
+        }
+
+        #notice p {
+            font-size: 20px;
+            line-height: 24px;
+            margin-top: 10px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Note Generator - 4 Beats in 1 Bar</h1>
+        <div id="note-container"> </div>
+        <div id="notice">
+            <h1 class="title">Rule</h1>
+            <p>Refresh this page, you will get 4 beats of notes. </p>
+            <p>You should compose a piece of music including these white-highlighted notes.</p>
+            <p>Of course, you can refresh this page several times to get more BEATS.</p>
+        </div>
+    </main>
+    <script>
+        $(function () {
+            var container = document.getElementById('note-container');
+            var width = 16, range = 12, density = 0.04, value = ['B', 'Bb/A#', 'A', 'Ab/G#', 'G', 'Gb/F#', 'F', 'E', 'Eb/D#', 'D', 'Db/C#', 'C'];
+            // Generate Title
+            var div = document.createElement("div");
+            div.setAttribute("class", "row title");
+            container.appendChild(div);
+            for (let i = 0; i < width; i++) {
+                var cell = document.createElement("div");
+                cell.setAttribute('class', 'cell');
+                cell.innerText = (Math.floor(i / 4) + 1) + " - " + (i % 4 + 1);
+                div.appendChild(cell);
+            }
+
+            // Generate Notes
+            var matrix = NoteGenerator.matrix(width, range, density);
+            console.log(matrix);
+            for (let j = 0; j < range; j++) {
+                var div = document.createElement("div");
+                div.setAttribute("class", "row");
+                container.appendChild(div);
+                for (let i = 0; i < width; i++) {
+                    var cell = document.createElement("div");
+                    if (matrix[i][j] == 0) cell.setAttribute('class', 'cell');
+                    else {
+                        cell.setAttribute('class', 'cell selected');
+                    }
+                    cell.innerText = value[j];
+                    div.appendChild(cell);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
