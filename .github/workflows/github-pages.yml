@@ -15,3 +15,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./html
           allow_empty_commit: true
+
+      - name: Tree
+        run: tree /home/runner/work/NoteGenerator/NoteGenerator
